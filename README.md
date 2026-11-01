@@ -56,16 +56,16 @@ Standard RNA-seq measures the **accumulated whole-cell (total) pool**, which buf
 
 ### 1. Gene Harmonization & Collision Resolution
 * Multi-source historical gene symbols standardized to current official **HGNC / GENCODE v50** identities.
-* Rare many-to-one alias collisions conservative-filtered to ensure a high-confidence one-to-one gene universe ($15,738$ nuclear genes; $18,762$ total genes; $15,518$ shared genes).
+* Rare many-to-one alias collisions conservative-filtered to ensure a high-confidence one-to-one gene universe (15,738 nuclear genes; 18,762 total genes; 15,518 shared genes).
 
 ### 2. Low-Expression Filtering Sensitivity
-* Unsupervised threshold sensitivity analysis testing candidate cutoffs ($0.001$ to $1.0$).
-* Operational cutoff selected at **$\text{Max\_expression} > 0.01$**, safely removing $\sim 25\%$ dead-weight noise while mathematically guaranteeing that no dynamically responsive genes are discarded ($\text{Excluded\_DR\_max} < 0.01$).
+* Unsupervised threshold sensitivity analysis testing candidate cutoffs (0.001 to 1.0).
+* Operational cutoff selected at **`Max_expression > 0.01`**, safely removing ~25% dead-weight noise while mathematically guaranteeing that no dynamically responsive genes are discarded (`Excluded_DR_max < 0.01`).
 
 ### 3. Trajectory Normalization (Shape vs. Amplitude)
-* **Log1p Transform**: $\ln(1 + x)$ variance stabilization to tame high-expression outliers.
-* **Gene-Wise Mean-Centering**: $x - \mu$ aligns all genes to baseline $0$ without distorting true response amplitudes.
-* **L2 Unit-Normalization**: Scaling vectors to $\|x\|_2 = 1$, enabling spherical K-means (cosine similarity) to group genes strictly by temporal shape regardless of abundance.
+* **Log1p Transform**: `log1p(x) = ln(1 + x)` variance stabilization to tame high-expression outliers.
+* **Gene-Wise Mean-Centering**: `x - mean(x)` aligns all genes to baseline 0 without distorting true response amplitudes.
+* **L2 Unit-Normalization**: Scaling vectors to `||x||₂ = 1`, enabling spherical K-means (cosine similarity) to group genes strictly by temporal shape regardless of abundance.
 
 ---
 
@@ -87,7 +87,7 @@ Standard RNA-seq measures the **accumulated whole-cell (total) pool**, which buf
 
 ### 4. Cluster Validation & Stability
 * Quantitative cluster evaluation using **Silhouette**, **Calinski-Harabasz**, **Davies-Bouldin**, and **Inertia**.
-* Multi-seed stability validation across 10 random seeds confirming near-deterministic convergence (**Adjusted Rand Index $> 0.91$**).
+* Multi-seed stability validation across 10 random seeds confirming near-deterministic convergence (**Adjusted Rand Index > 0.91**).
 
 ---
 
@@ -126,12 +126,9 @@ python 08_ts_clustering.py        # Time-series clustering & multi-panel PDF gen
 
 ## 📊 Output Deliverables
 
-* **`k_evaluation.csv`**: Goodness-of-fit metric table across $k \in [2, 10]$.
+* **`k_evaluation.csv`**: Goodness-of-fit metric table across `k` in [2, 10].
 * **`tslearn_gene_clusters_*_k{n}.csv`**: Gene-level cluster assignments.
 * **`cluster_results_*_k{n}.pdf`**: Multi-panel visualization showing all individual gene traces in gray with bold red centroid trajectory curves.
 
 ---
 
-## 📜 Citation & License
-
-This project is licensed under the MIT License. If you use this codebase or methodology in your research, please cite the corresponding paper / laboratory repository.
